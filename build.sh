@@ -11,7 +11,7 @@ gpg --keyserver pool.sks-keyservers.net --recv-keys "${SYNCTHING_GPG_KEY}" \
 # prepare arch version
 for i in $arch; do
 sh prepare.sh $i $version
-docker build --rm --no-cache --pull -t ${repo}-${i}:${version} .
+docker build -t ${repo}-${i}:${vervsion} .
 docker build -t ${repo}-${i} .
 docker push ${repo}-${i}:${version}
 docker push ${repo}-${i}
