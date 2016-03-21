@@ -2,4 +2,4 @@ FROM scratch
 
 ADD syncthing /syncthing
 
-CMD ["/syncthing"]
+ENTRYPOINT ["/syncthing", "-no-restart", "-no-browser"]
