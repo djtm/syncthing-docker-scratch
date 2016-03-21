@@ -17,6 +17,6 @@ set -x \
 	&& rm "$tarball" \
 	&& mv "$bin" syncthing \
 	&& rmdir "$dir" \
-	&& echo successfully prepared Syncthing v. Â$SYNCTHING_VERSION
+	&& echo "### Successfully prepared Syncthing version Â$SYNCTHING_VERSIONfor architecture $arch"
 
 exit 0
