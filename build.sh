@@ -20,7 +20,7 @@ docker build -t ${repo}-${i} .
 docker push ${repo}-${i}:${version}
 docker push ${repo}-${i}
 
-#cpollect images names
+#collect images names
 images="$images ${repo}-${i} ${repo}-${i}:${version}"
 done
 
