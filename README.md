@@ -15,3 +15,7 @@ Most people will want to reduce the amount of architectures to their need. Adjus
 ## Running
 
 Run an image using the run.sh script. Adjust the architecture (arch) to your needs. Adjust the script to mount the directories you want to share. Run as the user you want syncthing to run as.
+
+## rkt
+
+The amd64 container runs with rkt as well. Please see the `rkt_run.sh`.
