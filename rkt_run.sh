@@ -22,6 +22,7 @@ docker://djtm/syncthing-scratch-amd64 \
 # mount syntax: https://coreos.com/rkt/docs/latest/subcommands/run.html#mount-volumes-into-a-pod
 # namespacing does not yet seem to work --private-users --no-overlay \
 
-pidof syncthing 2>/dev/null && \
-ionice -c 3 -p $(pidof syncthing) && \
-renice 19 -p $(pidof syncthing)
+# This fails without namespacing or su:
+#pidof syncthing 2>/dev/null && \
+#ionice -c 3 -p $(pidof syncthing) && \
+#renice 19 -p $(pidof syncthing)
