@@ -9,10 +9,12 @@ The `build.sh` script
 1. retrieves a binary from the syncthing website
 2. verifies the hash signature
 3. creates a scratch docker image
+4. uploads the image to docker
+5. removes all images from the local system
 
-for all Linux architectures.
+for all Linux architectures. `sh build.sh 0.12.21` builds, uploads, and purges containers for all architectures.
 
-Most people will want to reduce the amount of architectures to their need. Adjust the repository to upload to your own repo.
+Most people will want to reduce the amount of architectures to their need. Adjust the repository to upload to your own repo. Containers are tagged with the version of syncthing given as command line. The system uploads the current version as latest version of the image.
 
 ## Running
 
