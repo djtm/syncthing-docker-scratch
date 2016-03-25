@@ -1,9 +1,12 @@
 #!/bin/sh
 
+[ -x ./rkt ] || echo Get rkt from https://github.com/coreos/rkt/releases and run this script inside the directory with the rkt binary.
+
 CONFIG="$HOME/.config/syncthing"
 mkdir -p "$CONFIG" $HOME/Sync
 
-sudo rkt run --interactive  --insecure-options=image --net=host --dns 8.8.8.8 --hostname $(hostname)-rkt-syncthing \
+
+sudo ./rkt run --interactive  --insecure-options=image --net=host --dns 8.8.8.8 --hostname $(hostname)-rkt-syncthing \
 --volume=ssl,kind=host,source=/etc/ssl/certs,readOnly=true --mount volume=ssl,target=/etc/ssl/certs \
 --volume=sync,kind=host,source=$HOME/Sync --mount volume=sync,target=/root/Sync \
 --volume config,kind=host,source="$CONFIG" --mount volume=config,target=/root/.config/syncthing \
