@@ -2,4 +2,6 @@ FROM scratch
 
 ADD syncthing /syncthing
 
-ENTRYPOINT ["/syncthing", "-no-browser"]
+EXPOSE 8384/tcp 22000/tcp
+
+ENTRYPOINT ["/syncthing", "-no-browser", "-no-restart"]
