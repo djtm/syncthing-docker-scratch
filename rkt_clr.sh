@@ -20,3 +20,4 @@ sudo ./rkt run --interactive --debug --stage1-path=stage1-kvm.aci \
 --cpu 300m --memory 500M -- -gui-address="http://0.0.0.0:8384" $*
 
 # The port names, e.g. 8384-tcp are created from the docker image's expose 8384/tcp by docker2aci.
+# readOnly=true fails for kvm stage 1 at this time. The other mounts _just_ don't have any effect.
