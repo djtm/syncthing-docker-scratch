@@ -15,7 +15,7 @@ sudo ./rkt run --interactive --debug --stage1-path=stage1-kvm.aci \
 --volume=ssl,kind=host,source=/etc/ssl/certs --mount volume=ssl,target=/etc/ssl/certs \
 --volume=sync,kind=host,source="$SYNC" --mount volume=sync,target=/root/Sync \
 --volume=config,kind=host,source="$CONFIG" --mount volume=config,target=/root/.config/syncthing \
---port 8384-tcp:8384 --port 22000-tcp:22000 \
+--port 8384-tcp:8384 --port 22000-tcp:22000 --port 21027-udp:21027 \
    docker://djtm/syncthing-scratch-amd64 \
 --cpu 300m --memory 500M -- -gui-address="http://0.0.0.0:8384" $*
 

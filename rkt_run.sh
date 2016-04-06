@@ -7,7 +7,7 @@ SYNC="$HOME/Sync"
 mkdir -p "$CONFIG" "$SYNC"
 
 sudo ./rkt run --interactive  --insecure-options=image --dns 8.8.8.8 --hostname $(hostname)-rkt-syncthing \
---port 8384-tcp:8384 --port 22000-tcp:22000 \
+--port 8384-tcp:8384 --port 22000-tcp:22000 --port 21027-udp:21027 \
 --set-env GOGC=40 \
 --volume=ssl,kind=host,source=/etc/ssl/certs,readOnly=true --mount volume=ssl,target=/etc/ssl/certs \
 --volume=sync,kind=host,source="$SYNC" --mount volume=sync,target=/root/Sync \
@@ -21,6 +21,7 @@ docker://djtm/syncthing-scratch-amd64 \
 # run syntax: https://coreos.com/rkt/docs/latest/subcommands/run.html
 # mount syntax: https://coreos.com/rkt/docs/latest/subcommands/run.html#mount-volumes-into-a-pod
 # namespacing does not yet seem to work --private-users --no-overlay \
+# run network syntax: https://github.com/coreos/rkt/blob/master/Documentation/networking/overview.md
 
 # This fails without namespacing or su:
 #pidof syncthing 2>/dev/null && \
