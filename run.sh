@@ -21,6 +21,7 @@ docker run -d \
 	-v "$CONFIG:/.config/syncthing" \
 	-v $HOME/Sync:/Sync \
         -v /etc/ssl/certs:/etc/ssl/certs:ro \
+	--read-only \
 	--user "$(id -u):$(id -g)" \
 	--net host \
 	$repository "$@"
