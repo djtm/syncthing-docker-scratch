@@ -1,46 +1,62 @@
 #!/bin/bash
-
-arch=386 # 386 amd64 arm arm64 ppc64 ppc64le
-repository="djtm/syncthing-scratch-$arch"
-
 set -x
 
-CONFIG="$HOME/.config/syncthing"
+# Setting the following variables should allow for most typical adjustments.
+# You can add syncthing parameters to the end of this script:
+# e.g. sh run.sh -version
+
+arch=386 		# 386 amd64 arm arm64 ppc64 ppc64le
+GOGC=40 		# Go Garbage collection, 40 % memory "generosity", less means stricter
+CONFIG="$HOME/.config/syncthing-docker"		# Syncthing configuration directory, includes index files
+usr="$(id -u):$(id -g)" # uid:gid, e.g. 1000:1000 by default runs syncthing as the uid and gid this script is run as
+Sync="$HOME/Sync"	# Path to your Sync Folder
+ssl="/etc/ssl/certs"	# path to ssl certificates
+cpushares="300" 	# 300 cpushares, see /sys/fs/cgroup/cpu/cpu.shares
+memory="500m" 		# for 500 MB memory limit
+swap="520m" 		# Total memory limit (memory + swap), https://docs.docker.com/engine/reference/run/#user-memory-constraints
+swappiness="1" 		# 0-100, no disables swap.
+bklioweight="10" 	# 0-1000
+dockercustom=""		# custom additional docker commands
+syncthingcustom=""	# custom additional syncthing commands
+repository="djtm/syncthing-scratch-$arch"
+
+# prevent directories being created by docker with root user
 mkdir -p "$CONFIG" $HOME/Sync
 
+# first get updates before we stop
 docker pull $repository
 docker stop syncthing
 docker rm syncthing
 
 docker run -d \
-	-m 500m -c 300 \
-	--memory-swap 20m \
-	-e GOGC=40 \
-	--name syncthing \
 	--restart always \
-	-v "$CONFIG:/.config/syncthing" \
-	-v $HOME/Sync:/Sync \
-        -v /etc/ssl/certs:/etc/ssl/certs:ro \
+	--name syncthing \
+	-e GOGC \
+	--user "$usr" \
+	--cpu-shares "$cpushares" \
+	--memory "$memory" \
+	--memory-swap "$swap" \
+	--memory-swappiness "$swappiness" \
+	--blkio-weight "$bklioweight" \
 	--read-only \
-	--user "$(id -u):$(id -g)" \
-	--net host \
-	$repository "$@"
+	-v "$CONFIG:/.config/syncthing" \
+	-v "$Sync":/Sync \
+        -v "$ssl":/etc/ssl/certs:ro \
+	-p 8384:8384/tcp -p 22000:22000/tcp -p 21027:21027/udp \
+ 	$dockercustom \
+	"$repository" $syncthingcustom "$@"
 
 # Mount additional directories with -v localdir:containerdir.
-# -m 500m for 500 MB memory limit
-# -e GOGC=40 for stricter Go garbage collection (40%).
-# -c 300 for 300 cpushares, compare to /sys/fs/cgroup/cpu/cpu.shares
-# --user runs syncthing as the user this script is run as.
-# you can try -p 8384:8384 instead of --net host
-# You can add syncthing parameters to the end of this script:
-# e.g. sh run.sh -version
+# --read-only mounts "/" read-only, the user should not have write access anyway.
+# -p hostport:containerport/protocol
 
 timeout 10s docker logs -f syncthing
-pidof syncthing 2>/dev/null && \
+# $(docker inspect --format '{{.State.Pid}}' syncthing) might be nice, but does not catch both processes.
+PID="$(pidof syncthing 2>/dev/null)" && \
 ionice -c 3 -p $(pidof syncthing) && \
 renice 19 -p $(pidof syncthing)
 
-# ionice and renice to reduce impact on running system.
+# ionice and renice to further reduce impact on running system.
 # All these settings are NOT for perfect performance, but for
 # minimum impact on the running system.
 
