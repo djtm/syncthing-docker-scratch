@@ -21,3 +21,7 @@ sudo ./rkt run --interactive --debug --stage1-path=stage1-kvm.aci \
 
 # The port names, e.g. 8384-tcp are created from the docker image's expose 8384/tcp by docker2aci.
 # readOnly=true fails for kvm stage 1 at this time. The other mounts _just_ don't have any effect.
+
+# - Creating the volumes already in the Dockerfile does not fixing mounting in rkt_clr.
+#--volume=volume-sync,kind=host,source="$SYNC" --mount volume=volume-sync,target=/root/Sync \
+#--volume volume--config-syncthing,kind=host,source="$CONFIG" --mount volume=volume--config-syncthing,target=/root/.config/syncthing \
