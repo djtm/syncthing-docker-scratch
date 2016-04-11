@@ -5,7 +5,7 @@ set -x
 # You can add syncthing parameters to the end of this script:
 # e.g. sh run.sh -version
 
-arch=386 		# 386 amd64 arm arm64 ppc64 ppc64le
+arch=amd64 		# 386 amd64 arm arm64 ppc64 ppc64le
 GOGC=40 		# Go Garbage collection, 40 % memory "generosity", less means stricter
 CONFIG="$HOME/.config/syncthing-docker"		# Syncthing configuration directory, includes index files
 usr="$(id -u):$(id -g)" # uid:gid, e.g. 1000:1000 by default runs syncthing as the uid and gid this script is run as
@@ -28,9 +28,9 @@ docker pull $repository
 docker stop syncthing
 docker rm syncthing
 
-docker run -d \
-	--restart always \
+docker run \
 	--name syncthing \
+ 	-p 8384:8384/tcp -p 22000:22000/tcp -p 21027:21027/udp \
 	-e GOGC \
 	--user "$usr" \
 	--cpu-shares "$cpushares" \
@@ -38,16 +38,18 @@ docker run -d \
 	--memory-swap "$swap" \
 	--memory-swappiness "$swappiness" \
 	--blkio-weight "$bklioweight" \
-	--read-only \
 	-v "$CONFIG:/.config/syncthing" \
 	-v "$Sync":/Sync \
         -v "$ssl":/etc/ssl/certs:ro \
-	-p 8384:8384/tcp -p 22000:22000/tcp -p 21027:21027/udp \
+	-d --restart always \
+ 	--read-only \
+	--cap-drop all \
  	$dockercustom \
 	"$repository" $syncthingcustom "$@"
 
 # Mount additional directories with -v localdir:containerdir.
 # --read-only mounts "/" read-only, the user should not have write access anyway.
+#	--net host \
 # -p hostport:containerport/protocol
 
 timeout 10s docker logs -f syncthing
