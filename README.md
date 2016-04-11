@@ -9,6 +9,8 @@ Run an image using the `run.sh` script. To run the current version container wit
 ```bash
 wget https://github.com/djtm/syncthing-docker-scratch/raw/master/run.sh && bash run.sh
 ```
+[![asciicast](https://asciinema.org/a/41919.png)](https://asciinema.org/a/41919)
+
 For other architectures, adjust `arch=` to your needs. By default, the script runs 
 the container as the user you run the script as. The default path for storing 
 configuration files is `$HOME.config/syncthing-docker`. As default volume is 
