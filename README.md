@@ -23,13 +23,7 @@ The amd64 container runs with rkt as well. Please see `rkt_run.sh` for standard 
 and `rkt_clr.sh` for a _highly experimental_ "clear container"/lkvm stage1. 
 Other architectures are not well supported by rkt at the moment. They need 
 the container built on the same architecture its run on for docker2aci to work 
-- and possibly further adjustments to rkt.
-
-### Issues
-* If relaying shows "0/1" for you, the CA Certificates might not be mounted
-from the right place. Please adjust the path in ssl=. For possible locations see
-https://www.happyassassin.net/2015/01/12/a-note-about-ssltls-trusted-certificate-stores-and-platforms/
-* `rkt_clr.sh` does not mount any volumes. All modifications to the container will be discarded.
+and possibly further adjustments to rkt.
 
 ## Building
 
@@ -47,3 +41,10 @@ Most people will want to reduce the amount of architectures to their need.
 You can adjust the script to upload to your own repository. Containers are 
 tagged with the version of syncthing given as command line. The system uploads
 the currently built version under the `:latest` tag as well.
+
+## Issues
+- If relaying shows "0/1" for you, the CA Certificates might not be mounted
+from the right place. Please adjust the path in ssl=. For possible locations see
+https://www.happyassassin.net/2015/01/12/a-note-about-ssltls-trusted-certificate-stores-and-platforms/
+- `rkt_clr.sh` does not mount any volumes. All modifications to the container will be discarded.
+- rkt only runs a container on the architecture it was built on.
