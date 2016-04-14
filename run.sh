@@ -33,8 +33,6 @@ docker run \
 	--cpu-shares "$cpushares" \
 	--memory "$memory" \
 	--memory-swap "$swap" \
-	--memory-swappiness "$swappiness" \
-	--blkio-weight "$bklioweight" \
 	-v "$CONFIG:/.config/syncthing" \
 	-v "$Sync":/Sync \
         -v "$ssl":/etc/ssl/certs:ro \
@@ -46,6 +44,9 @@ docker run \
 
 # --read-only mounts "/" read-only, the user should not have write access anyway.
 # -p hostport:containerport/protocol
+# not compatible to ubuntu 14.04 version of docker. wait until 16.10, then put this back.
+#	--memory-swappiness "$swappiness" \
+#	--blkio-weight "$bklioweight" \
 
 timeout 10s docker logs -f syncthing
 
