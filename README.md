@@ -51,3 +51,8 @@ from the right place. Please adjust the path in `ssl=`. For possible locations s
 https://www.happyassassin.net/2015/01/12/a-note-about-ssltls-trusted-certificate-stores-and-platforms/
 - `rkt_clr.sh` does not mount any volumes. All modifications to the container will be discarded.
 - rkt only runs a container on the architecture it was built on.
+
+## Security
+If you care about security, please use the build script to create the containers locally.
+The scripts and image are already generally trying to take security into account. 
+Feedback welcome.
