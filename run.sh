@@ -16,6 +16,7 @@ bklioweight="10" 	# 0-1000
 dockercustom=""		# custom additional docker commands, e.g. mount a volume via "-v /local/dir:/container/dir"
 syncthingcustom=""	# custom additional syncthing commands
 repository="djtm/syncthing-scratch-$arch"
+#port=8384
 
 # prevent directories being created by docker with root user
 mkdir -p "$CONFIG" $HOME/Sync
@@ -44,7 +45,7 @@ docker run \
 
 # --read-only mounts "/" read-only, the user should not have write access anyway.
 # -p hostport:containerport/protocol
-#	-p 8384:8384/tcp -p 22000:22000/tcp -p 21027:21027/udp # breaks local autodiscovery because local network not seen
+#	-p $port:8384/tcp -p 22000:22000/tcp -p 21027:21027/udp # breaks local autodiscovery
 # not compatible to ubuntu 14.04 version of docker. wait until 16.10, then put this back.
 #	--memory-swappiness "$swappiness" \
 #	--blkio-weight "$bklioweight" \
