@@ -1,0 +1,65 @@
+#https://github.com/jfrazelle/bane/blob/master/README.md
+Name = "syncthing"
+
+[Filesystem]
+# read only paths for the container
+ReadOnlyPaths = [
+	"/bin/**",
+	"/boot/**",
+	"/dev/**",
+	"/etc/**",
+	"/lib/**",
+	"/lib64/**",
+	"/mnt/**",
+	"/opt/**",
+	"/proc/**",
+	"/root/**",
+	"/sbin/**",
+	"/srv/**",
+	"/tmp/**",
+	"/sys/**",
+	"/usr/**",
+	"/*",
+]
+#	"/home/**",
+#	"/media/**",
+
+
+# paths where you want to log on write
+LogOnWritePaths = [
+	"/*"
+]
+
+# paths where you can write
+WritablePaths = [
+	"/.config/syncthing/**",
+	"/home/djtm/.Private/**",
+	"/home/djtm/.config/syncthing/**",
+	"/home/djtm/exchange/syncthing/**",
+	"/home/djtm/Private/exchange/syncthing/**",
+	"/home/djtm/Private/exchange/syncthing-files/**",
+	"/media/usb/obnam/**"
+]
+
+# allowed executable files for the container
+AllowExec = [
+	"/syncthing"
+]
+
+# denied executable files
+DenyExec = [
+]
+
+# allowed capabilities
+[Capabilities]
+Allow = [
+	"chown",
+	"net_bind_service"
+]
+
+[Network]
+Raw = false
+Packet = false
+Protocols = [
+]
+

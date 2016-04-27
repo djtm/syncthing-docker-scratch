@@ -1,0 +1,69 @@
+# Profile for djtm/syncthing-scratch containers,
+# based on bane config: see bane directory
+# -> https://github.com/jfrazelle/bane/
+# -> https://docs.docker.com/engine/security/apparmor/
+#
+# - add --security-opt apparmor=docker-syncthing to docker run
+# - sudo aa-complain /etc/apparmor.d/docker-syncthing
+#   to set complain mode if start fails
+
+#include <tunables/global>
+
+
+profile docker-syncthing flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  network inet,
+  network inet6,
+
+  deny network raw,
+
+  file,
+  umount,
+
+  deny /bin/** wl,
+  deny /boot/** wl,
+  deny /dev/** wl,
+  deny /etc/** wl,
+  deny /lib/** wl,
+  deny /lib64/** wl,
+  deny /mnt/** wl,
+  deny /opt/** wl,
+  deny /proc/** wl,
+  deny /root/** wl,
+  deny /sbin/** wl,
+  deny /srv/** wl,
+  deny /tmp/** wl,
+  deny /sys/** wl,
+  deny /usr/** wl,
+  deny /* wl,
+
+  audit /* w,
+
+
+  /.config/** w,
+#  /home/user/.Private/** w,
+  /home/user/.config/syncthing w,
+  /home/user/Sync w,
+
+  deny /* mrwklx,
+
+  /syncthing ix,
+
+  capability chown,
+  capability net_bind_service,
+
+  deny @{PROC}/{*,**^[0-9*],sys/kernel/shm*} wkx,
+  deny @{PROC}/sysrq-trigger rwklx,
+  deny @{PROC}/mem rwklx,
+  deny @{PROC}/kmem rwklx,
+  deny @{PROC}/kcore rwklx,
+  deny mount,
+  deny /sys/[^f]*/** wklx,
+  deny /sys/f[^s]*/** wklx,
+  deny /sys/fs/[^c]*/** wklx,
+  deny /sys/fs/c[^g]*/** wklx,
+  deny /sys/fs/cg[^r]*/** wklx,
+  deny /sys/firmware/efi/efivars/** rwklx,
+  deny /sys/kernel/security/** rwklx,
+}
