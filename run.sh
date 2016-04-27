@@ -28,7 +28,7 @@ docker rm syncthing
 
 docker run \
 	--name syncthing \
-	-e GOGC \
+	-e GOGC=$GOGC \
 	--net host \
 	--user "$usr" \
 	--cpu-shares "$cpushares" \
