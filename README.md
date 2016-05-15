@@ -19,6 +19,12 @@ configuration files is `$HOME.config/syncthing-docker`. As default volume is
 tuned for minimum impact on the running system. You can add syncthing 
 parameters to the end of the script, e.g. `bash run.sh -help`.
 
+### Beta builds
+
+While the current version is always tagged with the `:latest` flag, the current beta version
+is tagged as `:beta`. This should allow for easy beta testing with your scripts. Please note
+binaries are rarely released for beta versions.
+
 ### rkt
 
 The amd64 container runs with rkt as well. Please see `rkt_run.sh` for standard stage1 
