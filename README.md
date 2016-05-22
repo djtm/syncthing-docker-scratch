@@ -20,11 +20,15 @@ configuration files is `$HOME.config/syncthing-docker`. As default volume is
 tuned for minimum impact on the running system. You can add syncthing 
 parameters to the end of the script, e.g. `bash run.sh -help`.
 
-### Beta builds
+### Beta builds and tags
 
 While the current version is always tagged with the `:latest` flag, the current beta version
 is tagged as `:beta`. This should allow for easy beta testing with your scripts. Please note
-binaries are rarely released for beta versions.
+binaries are rarely released for beta versions. New major versions are not tagged `:latest` for
+a while. They are available under the major version tag first, e.g. `:0.13`. Later, `0.13` will 
+be tagged `:latest` and `0.12` will only be available as `:0.12(.x)`. If you want to be sure you
+can determin the upgrade to a major version please use the current major version tag in your
+run script.
 
 ### rkt
 
