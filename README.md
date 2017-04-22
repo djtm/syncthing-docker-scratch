@@ -1,4 +1,4 @@
-[![](https://imagelayers.io/badge/djtm/syncthing-scratch-amd64:latest.svg)](https://imagelayers.io/?images=djtm/syncthing-scratch-amd64:latest 'image layers')
+[![](https://badge.imagelayers.io/djtm/syncthing-scratch-amd64:latest.svg)](https://imagelayers.io/?images=djtm/syncthing-scratch-amd64:latest 'Get your own badge on imagelayers.io')
 # Syncthing Docker Scripts
 
 This repository contains scripts to build and/or run scratch docker images for syncthing. 
