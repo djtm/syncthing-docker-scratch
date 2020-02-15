@@ -8,7 +8,11 @@ images=""
 extraversion=":latest"
 [ "$2" ] && extraversion=":$2"
 
-[ -z "$1" ] && echo Please supply version number and optionally a tag, e.g. $0 0.12.24 beta && exit 1
+if [ -z "$1" ]; then
+	echo "Detecting last release and tagging as :latest as no version was given: e.g. $0 0.12.24 beta"
+	version=$(curl --silent "https://api.github.com/repos/syncthing/syncthing/releases/latest" | jq -r .tag_name | tr -d 'v')
+fi
+
 
 # gpg: key 00654A3E: public key "Syncthing Release Management <release@syncthing.net>" imported
 export SYNCTHING_GPG_KEY=37C84554E7E0A261E4F76E1ED26E6ED000654A3E
